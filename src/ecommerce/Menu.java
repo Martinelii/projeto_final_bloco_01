@@ -4,23 +4,23 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import ecommerce.controller.CarrinhoController;
 import ecommerce.model.Caderno;
 import ecommerce.model.Caneta;
-import ecommerce.model.Produto;
 
 public class Menu {
 
 	public static void main(String[] args) {
+		CarrinhoController produto = new CarrinhoController();
 		
+		int numero, materias;
+		String descricao, corTinta;
+		float preco;
 		
-		//teste Produtos
-		Produto produto = new Caderno(1, "Caderno Tilibra", 20f, 16);
-		produto.visualizar();
-		Produto produto2 = new Caneta(2, "Caneta Esferografica", 2f, "Azul");
-		produto2.visualizar();
-		
-		int opcao;
+		int opcao, tipo = 0;
 		Scanner leia = new Scanner(System.in);
+		
+	
 		
 		while(true) {
 			System.out.println("_____________________________________________________");
@@ -57,27 +57,83 @@ public class Menu {
 			
 			switch(opcao) {
 				case 1:
-					System.out.println("Opção: " + opcao); //provisorio até fazer classes
+					do {
+						System.out.println("Informe o produto:\n"
+								+ "[1] - Caderno\n"
+								+ "[2] - Caneta\n");
+						tipo = leia.nextInt();
+					}while(tipo < 1 && tipo > 2);
+					
+					System.out.println("Informe o preço R$: ");
+					preco = leia.nextFloat();
+					
+					switch(tipo) {
+						case 1 ->{
+							System.out.println("Informe a Quantidade de Materias que tem o caderno");
+							materias = leia.nextInt();
+							descricao = "Caderno";
+							produto.cadastrar(new Caderno(produto.gerarId(),descricao,preco,materias));
+						}
+						case 2 ->{
+							System.out.println("Informe a cor da tinta");
+							leia.skip("\\R?");
+							corTinta = leia.nextLine();
+							descricao = "Caneta";
+							produto.cadastrar(new Caneta(produto.gerarId(),descricao,preco,corTinta));
+							
+						}
+					}
 					continuar();
 					break;
 					
 				case 2:
-					System.out.println("Opção: " + opcao); //provisorio até fazer classes
+					System.out.println("Listar");
+					produto.listar();
 					continuar();
 					break;
 					
 				case 3:
-					System.out.println("Opção: " + opcao); //provisorio até fazer classes
+					System.out.println("Buscar");
+					System.out.println("Digite o numero do produto: ");
+					numero = leia.nextInt();
+					produto.buscar(numero);
 					continuar();
 					break;
 					
 				case 4:
-					System.out.println("Opção: " + opcao); //provisorio até fazer classes
+					System.out.println("Atualizar");
+					
+					System.out.println("Digite o numero do produto: ");
+					numero = leia.nextInt();
+					
+					var buscarProduto = produto.procurarCollecao(numero);
+					
+					if(buscarProduto != null) {
+						System.out.println("Informe o preço R$: ");
+						preco = leia.nextFloat();
+						
+						if(buscarProduto.getDescricao() == "Caderno") {
+							System.out.println("Informe a Quantidade de Materias que tem o caderno");
+							materias = leia.nextInt();
+							descricao = "Caderno";
+							produto.atualizar(new Caderno(numero,descricao,preco,materias));
+						}else if(buscarProduto.getDescricao() == "Caneta") {
+							System.out.println("Informe a cor da tinta");
+							corTinta = leia.nextLine();
+							descricao = "Caneta";
+							produto.atualizar(new Caneta(numero,descricao,preco,corTinta));
+						}
+					}else {
+						System.out.println("A Produto não foi encontrada!");
+					}
 					continuar();
 					break;
 					
 				case 5:
-					System.out.println("Opção: " + opcao); //provisorio até fazer classes
+					System.out.println("Excluir ");
+					System.out.println("Digite o numero do produto: ");
+					numero = leia.nextInt();
+					produto.excluir(numero);
 					continuar();
 					break;
 					
