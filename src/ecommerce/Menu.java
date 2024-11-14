@@ -62,7 +62,7 @@ public class Menu {
 								+ "[1] - Caderno\n"
 								+ "[2] - Caneta\n");
 						tipo = leia.nextInt();
-					}while(tipo < 1 && tipo > 2);
+					}while(tipo < 1 || tipo > 2);
 					
 					System.out.println("Informe o preço R$: ");
 					preco = leia.nextFloat();
