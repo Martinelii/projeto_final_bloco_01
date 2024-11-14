@@ -119,6 +119,7 @@ public class Menu {
 							produto.atualizar(new Caderno(numero,descricao,preco,materias));
 						}else if(buscarProduto.getDescricao() == "Caneta") {
 							System.out.println("Informe a cor da tinta");
+							leia.skip("\\R?");
 							corTinta = leia.nextLine();
 							descricao = "Caneta";
 							produto.atualizar(new Caneta(numero,descricao,preco,corTinta));
