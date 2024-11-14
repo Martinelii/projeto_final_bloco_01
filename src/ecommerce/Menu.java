@@ -4,10 +4,20 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import ecommerce.model.Caderno;
+import ecommerce.model.Caneta;
+import ecommerce.model.Produto;
+
 public class Menu {
 
 	public static void main(String[] args) {
 		
+		
+		//teste Produtos
+		Produto produto = new Caderno(1, "Caderno Tilibra", 20f, 16);
+		produto.visualizar();
+		Produto produto2 = new Caneta(2, "Caneta Esferografica", 2f, "Azul");
+		produto2.visualizar();
 		
 		int opcao;
 		Scanner leia = new Scanner(System.in);
